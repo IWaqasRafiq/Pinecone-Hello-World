@@ -1,0 +1,28 @@
+{
+  "name": "4.-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.mjs",
+    "dev": "nodemon server.mjs"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@pinecone-database/pinecone": "^1.0.0",
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jquery": "^3.7.0",
+    "mongodb": "^5.7.0",
+    "nanoid": "^4.0.2",
+    "nodemon": "^3.0.1",
+    "openai": "^4.6.0",
+    "pinecone": "^0.1.0",
+    "popper.js": "^1.16.1"
+  }
+}
