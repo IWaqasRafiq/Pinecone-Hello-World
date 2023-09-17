@@ -1,5 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
+import { Form, Card, Button, Navbar, Container } from "react-bootstrap";
+import { LuFileEdit } from "react-icons/lu";
+import { MdDeleteForever } from "react-icons/md";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import "./home.css";
 
 const baseUrl = "http://localhost:5501";
@@ -23,13 +28,10 @@ const Home = () => {
       setIsLoading(false);
       setAllPosts([...response.data]);
       setAlert(response?.data?.message);
-      
-
     } catch (error) {
       console.log(error.data);
       setIsLoading(false);
       setAlert(error.data.message); // Update the alert state with the error message
-
     }
   };
 
@@ -37,7 +39,9 @@ const Home = () => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      const response = await axios.get(`${baseUrl}/api/v1/search?q=${searchInputRef.current.value}`);
+      const response = await axios.get(
+        `${baseUrl}/api/v1/search?q=${searchInputRef.current.value}`
+      );
       console.log(response.data);
 
       setIsLoading(false);
@@ -124,35 +128,55 @@ const Home = () => {
 
   return (
     <div>
-      <form onSubmit={submitHandler}>
-        <label htmlFor="postTitleInput"> Post Title:</label>
-        <input id="postTitleInput" type="text" required minLength={2} maxLength={20} ref={postTitleInputRef} />
-        <br />
-
-        <label htmlFor="postBodyInput"> Post Body:</label>
-        <textarea
-          id="postBodyInput"
-          type="text"
-          required
-          minLength={2}
-          maxLength={999}
-          ref={postBodyInputRef}
-        ></textarea>
-        <br />
-
+      <Form onSubmit={searchHandler}>
+        <Navbar expand="lg" className="bg-body-tertiary">
+          <Container fluid>
+            <Navbar.Brand href="#">Pinecone CRUD</Navbar.Brand>
+            <Form className="d-flex">
+              <Form.Control
+                ref={searchInputRef}
+                type="search"
+                placeholder="Search"
+                className="me-2"
+                aria-label="Search"
+              />
+              <Button type="submit" variant="outline-success">Search</Button>
+            </Form>
+          </Container>
+        </Navbar>
+      </Form>
+      <Form
+        onSubmit={submitHandler}
+        style={{ width: "40rem", marginLeft: "8rem" }}
+      >
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Label>Post Title</Form.Label>
+          <Form.Control
+            type="text"
+            required
+            minLength={6}
+            maxLength={50}
+            ref={postTitleInputRef}
+            placeholder="Headings"
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+          <Form.Label>Post Text</Form.Label>
+          <Form.Control
+            required
+            minLength={2}
+            maxLength={999}
+            ref={postBodyInputRef}
+            as="textarea"
+            rows={3}
+          />
+        </Form.Group>
         <button type="submit">Publish Post</button>
         <span>
           {alert && <p>{alert}</p>}
           {isLoading && "Loading..."}
         </span>
-      </form>
-
-      <br />
-
-      <form onSubmit={searchHandler} style={{ textAlign: "right" }}>
-        <input type="search" placeholder="Search..." ref={searchInputRef} />
-        <button type="submit" hidden></button>
-      </form>
+      </Form>
 
       <div>
         {allPosts.map((post, index) => (
@@ -160,9 +184,17 @@ const Home = () => {
             {post.isEdit ? (
               <form onSubmit={editSaveSubmitHandler} className="editForm">
                 <input type="text" disabled value={post._id} hidden />
-                <input defaultValue={post.title} type="text" placeholder="title" />
+                <input
+                  defaultValue={post.title}
+                  type="text"
+                  placeholder="title"
+                />
                 <br />
-                <textarea defaultValue={post.text} type="text" placeholder="body" />
+                <textarea
+                  defaultValue={post.text}
+                  type="text"
+                  placeholder="body"
+                />
                 <br />
                 <button type="submit">Save</button>
                 <button
@@ -177,26 +209,51 @@ const Home = () => {
               </form>
             ) : (
               <div>
-                <h2>{post.title}</h2>
-                <p>{post.text}</p>
-
-                <button
-                  onClick={(e) => {
-                    console.log("click");
-                    allPosts[index].isEdit = true;
-                    setAllPosts([...allPosts]);
+                <Card
+                  style={{
+                    width: "40rem",
+                    marginTop: "10px",
+                    marginLeft: "8rem",
                   }}
                 >
-                  Edit
-                </button>
-
-                <button
-                  onClick={(e) => {
-                    deletePostHandler(post._id);
-                  }}
-                >
-                  Delete
-                </button>
+                  <Card.Body>
+                    <Card.Title>{post.title}</Card.Title>
+                    <Card.Text>{post.text}</Card.Text>
+                    <Button
+                      style={{ marginRight: "15px" }}
+                      variant="primary"
+                      onClick={(e) => {
+                        console.log("click");
+                        allPosts[index].isEdit = true;
+                        setAllPosts([...allPosts]);
+                      }}
+                    >
+                      <LuFileEdit
+                        style={{
+                          display: "inline",
+                          marginBottom: "4px",
+                          marginRight: "4px",
+                        }}
+                      />
+                      Edit
+                    </Button>
+                    <Button
+                      variant="danger"
+                      onClick={(e) => {
+                        deletePostHandler(post._id);
+                      }}
+                    >
+                      <MdDeleteForever
+                        style={{
+                          display: "inline",
+                          marginBottom: "4px",
+                          marginRight: "4px",
+                        }}
+                      />
+                      Delete
+                    </Button>
+                  </Card.Body>
+                </Card>
               </div>
             )}
           </div>

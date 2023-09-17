@@ -13,7 +13,7 @@ const ColorModeSwitcher = props => {
       variant="ghost"
       color="lightgray"
       pos={"absolute"}
-      // top={"5"}
+      top={"5"}
       right={"8"}
       
       onClick={toggleColorMode}
