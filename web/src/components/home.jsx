@@ -72,21 +72,21 @@ const Home = () => {
         setIsLoading:false
       });
 
-      console.log("Response data:", response.data);
+    console.log("Response data:", response.data);
 
-      // Log the current state of allPosts before updating it
-      console.log("Before allPosts update:", allPosts);
-  
-      // Prepend the new post to the beginning of the allPosts array
-      setAllPosts([response.data, ...allPosts]);
-  
-      // Log the updated state of allPosts
-      console.log("After allPosts update:", allPosts);
-  
-      setAlert(response.data.message);
-      setToggleRefresh(!toggleRefresh);
-  
-      e.target.reset();
+    // Log the current state of allPosts before updating it
+    console.log("Before allPosts update:", allPosts);
+
+    // Prepend the new post to the beginning of the allPosts array
+    setAllPosts([response.data, ...allPosts]);
+
+    // Log the updated state of allPosts
+    console.log("After allPosts update:", allPosts);
+
+    setAlert(response.data.message);
+    setToggleRefresh(!toggleRefresh);
+
+    e.target.reset();
     } catch (error) {
       // handle error
       console.log(error?.data);
