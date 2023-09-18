@@ -4,6 +4,8 @@ import { customAlphabet } from 'nanoid'
 import { ObjectId } from 'mongodb';
 import pineconeClient, { openai as openaiClient }
     from './../pinecone.mjs';
+    import swal from "sweetalert";
+
 
 const nanoid = customAlphabet('1234567890abcdefghijklmnopqrstuvwxyz', 10)
 
@@ -52,7 +54,7 @@ router.post('/post', async (req, res, next) => {
         }]);
         console.log("upsertResponse: ", upsertResponse);
 
-        res.send({ message: 'post created' });
+        res.send({ message: '' });
     } catch (e) {
         console.log("error inserting mongodb: ", e);
         res.status(500).send({ message: 'server error, please try later' });
@@ -173,7 +175,7 @@ router.put('/post/:postId', async (req, res, next) => {
         console.log("upsertResponse: ", upsertResponse);
 
 
-        res.send({ message: 'post created' });
+        res.send({ message: '' });
     } catch (e) {
         console.log("error inserting mongodb: ", e);
         res.status(500).send({ message: 'server error, please try later' });
