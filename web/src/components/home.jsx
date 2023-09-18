@@ -127,56 +127,67 @@ const Home = () => {
   };
 
   return (
-    <div>
-      <Form onSubmit={searchHandler}>
-        <Navbar expand="lg" className="bg-body-tertiary">
-          <Container fluid>
-            <Navbar.Brand href="#">Pinecone CRUD</Navbar.Brand>
-            <Form className="d-flex">
+    <div style={{
+      backgroundColor: "#F8F9FA"
+    }} >
+      <Navbar expand="lg" fixed="top" className="bg-body navbar">
+        <Container fluid className="navCon">
+          <Navbar.Brand className="navText" href="#">Pinecone CRUD</Navbar.Brand>
+          <Form className="d-flex" onSubmit={searchHandler}>
+            <Form.Control
+              ref={searchInputRef}
+              type="search"
+              placeholder="Search"
+              className="me-2"
+              aria-label="Search"
+            />
+            <Button type="submit" variant="outline-success">Search</Button>
+          </Form>
+        </Container>
+      </Navbar>
+      <div style={{
+        paddingTop: "3rem"
+      }}>
+        <Card style={{
+          width: "50rem",
+          marginTop: "5rem",
+          marginLeft: "8rem",
+          padding: "3rem",
+          boxShadow: "1px 1px 5px #9E9E9E"
+        }}>
+          <Form
+            onSubmit={submitHandler}
+          >
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Post Title</Form.Label>
               <Form.Control
-                ref={searchInputRef}
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
+                type="text"
+                required
+                minLength={6}
+                maxLength={50}
+                ref={postTitleInputRef}
+                placeholder="Headings"
               />
-              <Button type="submit" variant="outline-success">Search</Button>
-            </Form>
-          </Container>
-        </Navbar>
-      </Form>
-      <Form
-        onSubmit={submitHandler}
-        style={{ width: "40rem", marginLeft: "8rem" }}
-      >
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Form.Label>Post Title</Form.Label>
-          <Form.Control
-            type="text"
-            required
-            minLength={6}
-            maxLength={50}
-            ref={postTitleInputRef}
-            placeholder="Headings"
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-          <Form.Label>Post Text</Form.Label>
-          <Form.Control
-            required
-            minLength={2}
-            maxLength={999}
-            ref={postBodyInputRef}
-            as="textarea"
-            rows={3}
-          />
-        </Form.Group>
-        <button type="submit">Publish Post</button>
-        <span>
-          {alert && <p>{alert}</p>}
-          {isLoading && "Loading..."}
-        </span>
-      </Form>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+              <Form.Label>Post Text</Form.Label>
+              <Form.Control
+                required
+                minLength={2}
+                maxLength={999}
+                ref={postBodyInputRef}
+                as="textarea"
+                rows={3}
+              />
+            </Form.Group>
+            <Button type="submit">Publish Post</Button>
+            <span>
+              {alert && <p>{alert}</p>}
+              {isLoading && "Loading..."}
+            </span>
+          </Form>
+        </Card>
+      </div>
 
       <div>
         {allPosts.map((post, index) => (
@@ -211,7 +222,7 @@ const Home = () => {
               <div>
                 <Card
                   style={{
-                    width: "40rem",
+                    width: "50rem",
                     marginTop: "10px",
                     marginLeft: "8rem",
                   }}
