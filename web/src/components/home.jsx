@@ -11,7 +11,7 @@ import { Button } from "@chakra-ui/react";
 
 import "./home.css";
 
-const baseUrl = "https://pinecone-v-crud.uc.r.appspot.com";
+const baseUrl = "http://localhost:5501";
 
 const Home = () => {
   const postTitleInputRef = useRef(null);
